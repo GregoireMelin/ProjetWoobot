@@ -41,6 +41,7 @@ rob = urx.Robot("192.168.1.196")
 
 # RESSOURCES :
 - Depot Git de python-urx : https://github.com/SintefRaufossManufacturing/python-urx
-- Site support : https://www.universal-robots.com/how-tos-and-faqs/how-to/
+- Site support : https ://www.universal-robots.com/how-tos-and-faqs/how-to/
+- Etude Ur5 via VREP : https://studywolf.wordpress.com/tag/python/
 
 
