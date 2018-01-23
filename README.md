@@ -1,7 +1,7 @@
 # PROJET WOOBOT
 # Composition du depot :
 	- configure.sh (permet d'installer les dépendances via la commande : sudo bash configure.sh
-	- script_ur.py (script courant)
+	- Le dossier src contient l'ensemble des scripts du projet
 	- README.txt (indications)
 
 
