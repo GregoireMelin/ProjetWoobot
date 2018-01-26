@@ -8,6 +8,7 @@ import logging
 def initPosition_test(rob):
     j_init = [-1.4503806273089808, -1.965510670338766, -0.8303797880755823, -1.8648479620562952, 1.5238507986068726, 0.8078446388244629]
     rob.movej(j_init,acc=a*5,vel=v*100)
+    print rob.get_pose()
     return 1
 
 def getJointParameters(rob):
@@ -22,7 +23,6 @@ def getJointParameters(rob):
     return j
 # step : number of translation
 def moveThroughParametricLine(rob,step, finalPosition, acceleration,velocity):
-
     # -- Defining line with parametric equation
     initPose = rob.get_pose()
     initPosition = initPose.pos
@@ -77,18 +77,27 @@ if __name__ == "__main__":
 
     try:
         l = 0.05
-        v = 0.4 #0.05
-        a = 0.5
+        v = 0.2 #0.05
+        a = 0.3
         initPosition_test(rob)
         #getJointParameters(rob)
+
+
+        #Move through lines : (tested by pushing a box)
+        #current_pose = rob.get_pose()
+        #current_pose.pos[2]=0.02
+        #moveThroughParametricLine(rob,1, current_pose, a,v)
+        #current_pose.pos[0]=0.2
+        #moveThroughParametricLine(rob,1, current_pose, a,v)
+
         current_pose = rob.get_pose()
-        current_pose.pos[2]=0.02
+        current_pose.pos[0]=0.3
+        current_pose.pos[1]=0.1
+        current_pose.pos[2]=0.4
 
-
-        moveThroughParametricLine(rob,10, current_pose, a,v)
-
-        current_pose.pos[0]=0.2
-        moveThroughParametricLine(rob,10, current_pose, a,v)
+        rob.movep(current_pose,a,v, 10)
+        a = rob.get_pose()
+        print a.pos
 
 
 
