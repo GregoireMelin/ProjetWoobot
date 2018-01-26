@@ -5,6 +5,7 @@ from transforms3d.euler import euler2mat, mat2euler
 import urx
 import logging
 
+
 if __name__ == "__main__":
     rob = urx.Robot("192.168.1.196")#("192.168.0.100")
     #rob = urx.Robot("localhost")
@@ -17,6 +18,7 @@ if __name__ == "__main__":
         j = rob.getj()
         print("Initial joint configuration is ", j)
         t = rob.get_pose()
+
         print("Transformation from base to tcp is: ", t)
         print("Translating in x")
         print t.pos[1]#pose_vector; t.orient pour orientation
@@ -34,7 +36,7 @@ if __name__ == "__main__":
       	pose_bis = (pose.pos[0],pose.pos[1],pose.pos[2],2.22,2.22,0)
       	rob.movel(pose_bis, acc=a, vel=v);
       	pose_bis = (pose.pos[0]+0.10,pose.pos[1],pose.pos[2],2.22,2.22,0)
-      	rob.movel(pose_bis, acc=a, vel=v);
+      	rob.movel(pose_bis, v);
       	pose_bis = (pose.pos[0],pose.pos[1]+0.10,pose.pos[2],2.22,2.22,0)
       	rob.movel(pose_bis, acc=a, vel=v);
       	pose_bis = (pose.pos[0]-0.10,pose.pos[1],pose.pos[2],2.22,2.22,0)
@@ -65,7 +67,5 @@ if __name__ == "__main__":
         #rob.set_pose(t, vel=v, acc=a)
         #print("Sending robot back to original position")
         #rob.movej(j, acc=0.8, vel=0.2)
-
-
     finally:
         rob.close()
