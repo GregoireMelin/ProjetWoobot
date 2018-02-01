@@ -5,15 +5,9 @@ from transforms3d.euler import euler2mat, mat2euler
 import urx
 import logging
 
-def initPosition(rob):
-    j_init=[-2.6236677805529993, -2.213935677205221, -1.566683594380514, -0.8541472593890589, 1.5490251779556274, 0.5212509036064148]
-    rob.movej(j_init,acc=a,vel=v)
-    print rob.get_pose()
-    return 1
-
 def initPosition_test(rob):
     j_init = [-1.4503806273089808, -1.965510670338766, -0.8303797880755823, -1.8648479620562952, 1.5238507986068726, 0.8078446388244629]
-    rob.movej(j_init,acc=a,vel=v)
+    rob.movej(j_init,acc=a*5,vel=v*100)
     print rob.get_pose()
     return 1
 
@@ -82,25 +76,36 @@ if __name__ == "__main__":
     rob.set_payload(0.5, (0,0,0))
 
     try:
-        j_photo=[-2.583017889653341, -2.0957582632647913, -1.32068378130068, -0.39827186266054326, -0.14723378816713506, -0.6676643530475062]
-        v = 0.1#0.05
-        a = 0.1
-        #initPosition_test(rob)
-
-        rob.movej(j_photo,v*10,a*10)
-        initPosition(rob)
-        current_pose = rob.get_pose()
-        current_pose.pos[1]=current_pose.pos[1]+0.7
-        moveThroughParametricLine(rob,1, current_pose, a,v)
+        l = 0.05
+        v = 0.6#0.05
+        a = 0.8
         initPosition_test(rob)
-        # Robot en
-        #<Transform:
-        #<Orientation:
-        #array([[ 0.90711834,  0.42026867,  0.0225957 ],
-        #       [ 0.41473778, -0.88346468, -0.2179053 ],
-        #       [-0.07161627,  0.20703719, -0.97570831]])>
-        #<Vector: (-0.59372, 0.34843, 0.12286)>
-        #>
+        pos_to=rob.get_pose()
+
+        #pos_via=rob.get_pose()
+        #pos_via.pos[0]=pos_via.pos[0]-0.05
+        #pos_via.pos[1]=pos_via.pos[1]-0.05
+        #pos_to.pos[0]=pos_to.pos[0]-0.02
+
+        #rob.movec(pos_via,pos_to,a,v)
+
+        #Move through lines : (tested by pushing a box)
+        current_pose = rob.get_pose()
+        current_pose.pos[2]=0.21 #Regle pour la table (0.17)
+        moveThroughParametricLine(rob,1, current_pose, a,v)
+        current_pose.pos[0]=0.5
+        moveThroughParametricLine(rob,8, current_pose, a,v)
+        initPosition_test(rob)
+        print "Get force from effector : ", rob.get_tcp_force()
+
+
+        print rob.getj()
+        #j1=[-1.4557526747332972, -2.5017550627337855, -0.9440138975726526, -1.2093928495990198, 1.523707389831543, 0.8078206777572632]
+        #rob.movej(j1,a,v)
+        #j2=[-1.3762038389789026, -2.5017669836627405, -0.9440258185016077, -1.2093451658831995, 1.5236953496932983, 0.8078086972236633]
+        #rob.movej(j2,a,v)
+        #j3=[-1.306640926991598, -2.5018027464496058, -0.9440496603595179, -1.2093570868121546, 1.523719310760498, 0.8078206777572632]
+        #rob.movej(j3,a,v)
 
     finally:
         rob.close()
